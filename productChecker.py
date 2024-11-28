@@ -50,11 +50,11 @@ PRODUCT_URLS = [
     ]
 
 # Email configuration
-EMAIL = "darrensandhu2000@gmail.com"
-PASSWORD = "vcxc yhhg giuz zthe"
-TO_EMAILS = ["darrensandhu01@gmail.com"]
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
+EMAIL = os.getenv("EMAIL")
+PASSWORD = os.getenv("PASSWORD")
+TO_EMAILS = os.getenv("TO_EMAILS")
+SMTP_SERVER = os.getenv("SMTP_SERVER")
+SMTP_PORT = os.getenv("SMTP_PORT")
 
 # Shipping information
 shipping_info = {
@@ -76,8 +76,6 @@ payment_info = {
     'expiry_year': card_expiry_month,
     'cvv': card_cvv
 }
-
-print(payment_info)
 
 payment_info_no_env = {
     'number': '5356 7401 1391 2604',
