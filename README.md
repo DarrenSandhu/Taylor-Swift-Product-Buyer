@@ -69,7 +69,7 @@ Usage:
 --------------
 1. Run the Script: Execute the script with:
 ```bash
-python3 script_name.py
+python3 productChecker.py
 ```
 
 2. Monitor Logs: The script logs activity to the console, including stock status, errors, and checkout progress.
