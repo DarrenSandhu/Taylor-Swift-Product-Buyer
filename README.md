@@ -1,4 +1,3 @@
-"""
 Taylor Swift Store Bot
 ========================
 
