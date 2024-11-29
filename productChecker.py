@@ -258,6 +258,7 @@ def add_to_cart(url):
             return False
             
     except Exception as e:
+        driver.save_screenshot("add_to_cart_error.png")
         logging.error(f"Error in add_to_cart: {e}")
         return False
 
@@ -269,13 +270,22 @@ def fill_shipping_info(driver, shipping_info):
     """Fill in the shipping information."""
     try:
         logging.info("Filling shipping information")
-        driver.find_element(By.ID, "email").send_keys(shipping_info['email'])
+        wait = WebDriverWait(driver, 120)
+        wait.until(EC.presence_of_element_located((By.ID, "email")))
+        driver.find_element(By.ID, "emai").send_keys(shipping_info['email'])
+
+        wait.until(EC.presence_of_element_located((By.ID, "Select0")))
         driver.find_element(By.ID, "Select0").send_keys(shipping_info['country'])
+
+        wait.until(EC.presence_of_element_located((By.ID, "TextField0")))
         driver.find_element(By.ID, "TextField0").send_keys(shipping_info['first_name'])
+
+        wait.until(EC.presence_of_element_located((By.ID, "TextField1")))
         driver.find_element(By.ID, "TextField1").send_keys(shipping_info['last_name'])
+
+        wait.until(EC.presence_of_element_located((By.ID, "shipping-address1")))
         driver.find_element(By.ID, "shipping-address1").send_keys(shipping_info['address1'])
 
-        wait = WebDriverWait(driver, 10)
         wait.until(EC.visibility_of_element_located((By.ID, "shipping-address1-options")))
         time.sleep(0.5)
 
@@ -283,6 +293,7 @@ def fill_shipping_info(driver, shipping_info):
         driver.find_element(By.ID, "TextField5").send_keys(shipping_info['phone'])
         logging.info("Shipping information filled successfully.")
     except Exception as e:
+        driver.save_screenshot("shipping_error.png")
         logging.error(f"Error filling shipping information: {e}")
 
 
@@ -319,6 +330,7 @@ def fill_payment_info(driver, payment_info):
         driver.switch_to.default_content()
         logging.info("Payment information filled successfully.")
     except Exception as e:
+        driver.save_screenshot("payment_error.png")
         logging.error(f"Error filling payment information: {e}")
 
 def checkout(checkout_url, shipping_info, payment_info):
@@ -382,6 +394,7 @@ def checkout(checkout_url, shipping_info, payment_info):
         
             
     except Exception as e:
+        driver.save_screenshot("checkout_error.png")
         logging.error(f"Error during checkout: {e}")
         return False
     
@@ -391,7 +404,7 @@ while True:
     for url in PRODUCT_URLS:
         in_stock, product_name = check_product_and_get_name(url)
         if in_stock and product_name not in notified_products:
-            send_notification(url, product_name)
+            # send_notification(url, product_name)
             checkout_url = add_to_cart(url)
             if checkout_url and checkout_url.startswith(BASE_CHECKOUT_URL):
                 success = checkout(checkout_url, shipping_info, payment_info)
