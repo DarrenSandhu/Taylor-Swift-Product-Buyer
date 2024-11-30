@@ -12,7 +12,7 @@ Features:
 
 Requirements:
 -------------
-- Python 3.9+
+- Python 3+
 - Required Python libraries:
   - os
   - time
